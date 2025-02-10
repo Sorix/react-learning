@@ -4,9 +4,19 @@ function Header({ course }) {
   )
 }
 
-function Content({part, numberOfExercises}) {
+function Part({part, numberOfExercises}) {
   return (
     <p>{part} {numberOfExercises}</p>
+  )
+}
+
+function Content({parts}) {
+  return (
+    <div>
+      <Part part={parts[0].part} numberOfExercises={parts[0].numberOfExercises} />
+      <Part part={parts[1].part} numberOfExercises={parts[1].numberOfExercises} />
+      <Part part={parts[2].part} numberOfExercises={parts[2].numberOfExercises} />
+    </div>
   )
 }
 
@@ -28,9 +38,22 @@ const App = () => {
   return (
     <div>
       <Header course={ course }/>
-      <Content part={ part1 } numberOfExercises={ exercises1 } />
-      <Content part={ part2 } numberOfExercises={ exercises2 } />
-      <Content part={ part3 } numberOfExercises={ exercises3 } />
+      <Content parts={ 
+        [
+          { 
+            "part": part1,
+            "numberOfExercises": exercises1
+          },
+          { 
+            "part": part2,
+            "numberOfExercises": exercises2
+          },
+          { 
+            "part": part3,
+            "numberOfExercises": exercises3
+          }
+        ] 
+      } />
       <Total total={exercises1 + exercises2 + exercises3} />
     </div>
   )

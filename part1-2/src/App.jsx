@@ -1,43 +1,27 @@
-import './App.css'
-
-import { useState } from 'react'
-
-const Button = ({onClick, children}) => {
-  return (
-    <button onClick={onClick}>{children}</button>
-  )
-}
-
-const Statistics = () => {
-
-}
-
 const App = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0
-  })
-
-  const handleButtonClick = (feedbackType) => () => {
-    const newFeedback = {
-      ...feedback,
-      [feedbackType]: feedback[feedbackType] + 1
-    }
-
-    console.log("New feedback", newFeedback)
-
-    setFeedback(newFeedback)
+  const course = {
+    id: 1,
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      }
+    ]
   }
 
-  return (
-    <div>
-      <h1>give feedback</h1>
-      <Button onClick={handleButtonClick("good")}>Good</Button>
-      <Button onClick={handleButtonClick("neutral")}>Neutral</Button>
-      <Button onClick={handleButtonClick("bad")}>Bad</Button>
-    </div>
-  )
+  return <Course course={course} />
 }
 
 export default App

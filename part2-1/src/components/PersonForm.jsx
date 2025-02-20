@@ -23,10 +23,7 @@ function PersonForm({persons, setPersons, setDuplicateNotification}) {
 	return (
 		<form onSubmit={(event) => handleSubmit({event, persons, setPersons, setDuplicateNotification})}>
 			<div>
-				name: <input name="name" />
-			</div>
-			<div>
-				<button type="submit">add</button>
+					Add person: <input name="name" /><button type="submit">add</button>
 			</div>
 		</form>
 	)

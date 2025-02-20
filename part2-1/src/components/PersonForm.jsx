@@ -13,7 +13,9 @@ function handleSubmit({event, persons, setPersons, setDuplicateNotification}) {
 
 	const newPerson = {
 		name: newName,
-		id: persons.length + 1
+		number: event.target.phone.value,
+		id: persons.length + 1,
+		isShown: true
 	}
 
 	setPersons(persons.concat(newPerson))
@@ -23,7 +25,10 @@ function PersonForm({persons, setPersons, setDuplicateNotification}) {
 	return (
 		<form onSubmit={(event) => handleSubmit({event, persons, setPersons, setDuplicateNotification})}>
 			<div>
-					Add person: <input name="name" /><button type="submit">add</button>
+				<h4>Add person</h4>
+				<input name="name" placeholder="name" />
+				<input name="phone" placeholder="phone" />
+				<button type="submit">add</button>
 			</div>
 		</form>
 	)

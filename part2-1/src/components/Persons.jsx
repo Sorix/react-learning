@@ -4,7 +4,7 @@ const Persons = ({ persons }) => {
 			{persons
 				.filter((person) => person.isShown)
 				.map((person) => (
-					<li key={person.id}>{person.name}</li>
+					<li key={person.id}>{person.name} {person.number}</li>
 				))}
 		</ul>
 	)

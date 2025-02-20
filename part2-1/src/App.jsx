@@ -1,50 +1,37 @@
 import { useState } from 'react'
-import Note from './components/Note'
+import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState("")
-  const [showAll, setShowAll] = useState(true)
+const App = () => {
+	const [persons, setPersons] = useState([
+		{ name: 'Arto Hellas', id: 1 }
+	])
+	const [duplicateNotification, setDuplicateNotification] = useState({
+		isShown: false,
+		name: null,
+	})
 
-  const addNote = (event) => {
-    event.preventDefault()
-    console.log("Button clicked", event);
+	return (
+		<div>
+			<h2>Phonebook</h2>
+			<PersonForm
+				persons={persons}
+				setPersons={setPersons}
+				setDuplicateNotification={setDuplicateNotification}
+			/>
+      
+			{duplicateNotification.isShown && (
+				<Notification personName={duplicateNotification.name} />
+			)}
 
-    setNotes(notes.concat({
-      content: newNote,
-      important: true,
-      id: notes.length + 1
-    }))
-  }
-
-  const handleNoteChange = (event) => setNewNote(event.target.value)
-
-  const handleShowAllClick = () => setShowAll(!showAll)
-
-  const isImportant = (note) => {
-    if (showAll) { return true }
-    return note.important 
-  }
-
-  return (
-    <div>
-      <h1>Notes</h1>
-      <button onClick={handleShowAllClick}>{showAll ? "Show Important Only" : "Show All"}</button>
-      <ul>
-        {
-          notes
-            .filter(isImportant)
-            .map((note) => (
-              <Note key={note.id} note={note} />
-            ))
-        }
-      </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange} />
-        <button type="submit">save</button>
-      </form>
-    </div>
-  )
+			<h2>Numbers</h2>
+			<ul>
+				{persons.map((person) => (
+					<li key={person.id}>{person.name}</li>
+				))}
+			</ul>
+		</div>
+	)
 }
 
 export default App

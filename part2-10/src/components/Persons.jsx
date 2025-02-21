@@ -1,8 +1,8 @@
-const Persons = ({ persons }) => {
+const Persons = ({ persons, hiddenPersonIDs }) => {
 	return (
 		<ul>
 			{persons
-				.filter((person) => person.isShown)
+				.filter((person) => !hiddenPersonIDs.includes(person.id))
 				.map((person) => (
 					<li key={person.id}>{person.name} {person.number}</li>
 				))}

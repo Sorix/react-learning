@@ -1,15 +1,15 @@
-function Filter({persons, setPersons}) {
+function Filter({persons, setHiddenPersonIDs}) {
+	function includes(value1, value2) {
+		return value1.toLowerCase().includes(value2.toLowerCase())
+	}
+
 	function handleChange(event) {
 		const value = event.target.value;
+		const hiddenPersonIDs = persons
+			.filter(person => !includes(person.name, value))
+			.map(person => person.id)
 
-		const filteredPersons = persons.map(person => (
-			{
-				...person,
-				isShown: person.name.toLowerCase().includes(value.toLowerCase())
-			}
-		))
-		
-		setPersons(filteredPersons)
+		setHiddenPersonIDs(hiddenPersonIDs)
 	}
 
 	return (

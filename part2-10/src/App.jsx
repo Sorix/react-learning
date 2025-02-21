@@ -7,6 +7,7 @@ import axios from 'axios'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
+	const [hiddenPersonIDs, setHiddenPersonIDs] = useState([])
 	const [duplicateNotification, setDuplicateNotification] = useState({
 		isShown: false,
 		name: null,
@@ -24,7 +25,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
-			<Filter persons={persons} setPersons={setPersons} />
+			<Filter persons={persons} setHiddenPersonIDs={setHiddenPersonIDs} />
 			<PersonForm
 				persons={persons}
 				setPersons={setPersons}
@@ -36,7 +37,7 @@ const App = () => {
 			)}
 
 			<h2>Numbers</h2>
-			<Persons persons={persons} />
+			<Persons persons={persons} hiddenPersonIDs={hiddenPersonIDs} />
 		</div>
 	)
 }

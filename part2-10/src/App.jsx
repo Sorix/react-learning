@@ -24,6 +24,15 @@ const App = () => {
 			.add(newPerson)
 			.then(response => setPersons(persons.concat(response.data)))
 	}
+	
+	const handleRemovePersonClick = (personID) => {
+		network
+			.remove(personID)
+			.then(setPersons(persons.filter(person =>
+				person.id !== personID
+			)))
+			.catch(error => alert(error))
+	}
 
 	return (
 		<div>
@@ -40,7 +49,11 @@ const App = () => {
 			)}
 
 			<h2>Numbers</h2>
-			<Persons persons={persons} hiddenPersonIDs={hiddenPersonIDs} />
+			<Persons 
+				persons={persons} 
+				hiddenPersonIDs={hiddenPersonIDs} 
+				onClick={handleRemovePersonClick}
+			/>
 		</div>
 	)
 }

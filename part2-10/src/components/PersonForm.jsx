@@ -1,27 +1,34 @@
-function handleSubmit({event, persons, onAddPerson, setDuplicateNotification}) {
+function handleSubmit({event, persons, onAddPerson}) {
 	event.preventDefault()
 
-	// Check if person was already added
 	const newName = event.target.name.value
-	const isDuplicate = persons.find(person => person.name === newName)
-	setDuplicateNotification({
-		isShown: isDuplicate,
-		name: isDuplicate ? newName : null
-	})
-
-	if (isDuplicate) { return }
-
 	const newPerson = {
 		name: newName,
 		number: event.target.phone.value
 	}
-
-	onAddPerson(newPerson)
+	const existingPerson = persons.find(person => person.name === newName)
+	
+	if (existingPerson) {
+		handleDuplicate({
+			...newPerson,
+			id: existingPerson.id,
+		}, onAddPerson)
+	} else {
+		onAddPerson(newPerson)
+	}
 }
 
-function PersonForm({persons, onAddPerson, setDuplicateNotification}) {
+function handleDuplicate(newPerson, onAddPerson) {
+	const isConfirmed = confirm(`${newPerson.name} is already exists. Replace phone number with the new one?`)
+
+	if (isConfirmed) {
+		onAddPerson(newPerson)
+	}
+}
+
+function PersonForm({persons, onAddPerson}) {
 	return (
-		<form onSubmit={(event) => handleSubmit({event, persons, onAddPerson, setDuplicateNotification})}>
+		<form onSubmit={(event) => handleSubmit({event, persons, onAddPerson})}>
 			<div>
 				<h4>Add person</h4>
 				<input name="name" placeholder="name" />

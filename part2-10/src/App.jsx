@@ -1,17 +1,12 @@
 import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
-import Notification from './components/Notification'
 import Persons from './components/Persons'
 import network from './services/persons'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
 	const [hiddenPersonIDs, setHiddenPersonIDs] = useState([])
-	const [duplicateNotification, setDuplicateNotification] = useState({
-		isShown: false,
-		name: null,
-	})
 
 	useEffect(() => {
 		network
@@ -20,9 +15,21 @@ const App = () => {
 	}, [])
 
 	const handleAddPerson = (newPerson) => {
-		network
-			.add(newPerson)
-			.then(response => setPersons(persons.concat(response.data)))
+		const isDuplicate = persons.find(person => person.name === newPerson.name)
+
+		if (isDuplicate) {
+			console.log("Updated person to ", newPerson)
+			
+			network
+				.update(newPerson)
+				.then(response => setPersons(
+					persons.map(person => person.id === newPerson.id ? response.data : person)
+				))
+		} else {
+			network
+				.add(newPerson)
+				.then(response => setPersons(persons.concat(response.data)))
+		}
 	}
 	
 	const handleRemovePersonClick = (personID) => {
@@ -41,12 +48,7 @@ const App = () => {
 			<PersonForm
 				persons={persons}
 				onAddPerson={handleAddPerson}
-				setDuplicateNotification={setDuplicateNotification}
 			/>
-			
-			{duplicateNotification.isShown && (
-				<Notification personName={duplicateNotification.name} />
-			)}
 
 			<h2>Numbers</h2>
 			<Persons 

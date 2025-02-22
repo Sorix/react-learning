@@ -3,7 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Notification from './components/Notification'
 import Persons from './components/Persons'
-import axios from 'axios'
+import network from './services/persons'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
@@ -14,12 +14,9 @@ const App = () => {
 	})
 
 	useEffect(() => {
-		axios
-			.get("http://localhost:3001/persons")
-			.then(response => {
-				console.log("Data received")
-				setPersons(response.data)
-			})
+		network
+			.get()
+			.then(response => setPersons(response.data))
 	}, [])
 
 	return (

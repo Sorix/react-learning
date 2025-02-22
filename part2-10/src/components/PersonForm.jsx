@@ -1,4 +1,4 @@
-function handleSubmit({event, persons, setPersons, setDuplicateNotification}) {
+function handleSubmit({event, persons, onAddPerson, setDuplicateNotification}) {
 	event.preventDefault()
 
 	// Check if person was already added
@@ -13,17 +13,15 @@ function handleSubmit({event, persons, setPersons, setDuplicateNotification}) {
 
 	const newPerson = {
 		name: newName,
-		number: event.target.phone.value,
-		id: persons.length + 1,
-		isShown: true
+		number: event.target.phone.value
 	}
 
-	setPersons(persons.concat(newPerson))
+	onAddPerson(newPerson)
 }
 
-function PersonForm({persons, setPersons, setDuplicateNotification}) {
+function PersonForm({persons, onAddPerson, setDuplicateNotification}) {
 	return (
-		<form onSubmit={(event) => handleSubmit({event, persons, setPersons, setDuplicateNotification})}>
+		<form onSubmit={(event) => handleSubmit({event, persons, onAddPerson, setDuplicateNotification})}>
 			<div>
 				<h4>Add person</h4>
 				<input name="name" placeholder="name" />

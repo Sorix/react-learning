@@ -3,6 +3,6 @@ import networkService from 'axios'
 const baseURL = "http://localhost:3001/persons"
 
 function get() { return networkService.get(baseURL) }
-function save(person) { networkService.post(baseURL, person) }
+function add(person) { return networkService.post(baseURL, person) }
 
-export default { get, save }
+export default { get, add }

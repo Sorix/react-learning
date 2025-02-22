@@ -19,13 +19,19 @@ const App = () => {
 			.then(response => setPersons(response.data))
 	}, [])
 
+	const handleAddPerson = (newPerson) => {
+		network
+			.add(newPerson)
+			.then(response => setPersons(persons.concat(response.data)))
+	}
+
 	return (
 		<div>
 			<h2>Phonebook</h2>
 			<Filter persons={persons} setHiddenPersonIDs={setHiddenPersonIDs} />
 			<PersonForm
 				persons={persons}
-				setPersons={setPersons}
+				onAddPerson={handleAddPerson}
 				setDuplicateNotification={setDuplicateNotification}
 			/>
 			

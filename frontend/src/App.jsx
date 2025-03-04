@@ -6,12 +6,13 @@ import network from './services/networkService'
 import LoginForm from './components/LoginForm'
 import Welcome from './components/Welcome'
 import networkService from './services/networkService'
-import { use } from 'react'
+import Notification from './components/Notification'
 
 const App = () => {
 	const [persons, setPersons] = useState([])
 	const [hiddenPersonIDs, setHiddenPersonIDs] = useState([])
 	const [isLogined, setIsLogined] = useState(false)
+	const [loginNotification, setLoginNotification] = useState(false)
 
 	useEffect(() => {
 		network
@@ -61,6 +62,11 @@ const App = () => {
 			.then(response => {
 				localStorage.setItem("credentials", response.data)
 				setIsLogined(true)
+				setLoginNotification(true)
+
+				setTimeout(() => {
+					setLoginNotification(false)
+				}, 2_000)
 			})
 	}
 
@@ -72,12 +78,13 @@ const App = () => {
 	return (
 		<div>
 			<h2>Login</h2>
+			{ loginNotification && <Notification text="Вы залогинены" /> }
 			{
 				isLogined ? 
 					<Welcome logout={handleLogout} /> :
 					<LoginForm handleLogin={handleLogin} />
 			}
-
+			
 			<h2>Phonebook</h2>
 			<Filter persons={persons} setHiddenPersonIDs={setHiddenPersonIDs} />
 			<PersonForm

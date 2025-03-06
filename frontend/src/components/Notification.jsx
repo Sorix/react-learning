@@ -1,7 +1,7 @@
-const Notification = ({text}) => {
+const Notification = ({notification: {color, text}}) => {
 	const style = {
-		color: "green",
-		border: "1px solid green"
+		color: color,
+		border: `1px solid ${color}`
 	}
 
 	return <div style={style}>{text}</div>

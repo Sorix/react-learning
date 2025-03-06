@@ -12,7 +12,7 @@ const App = () => {
 	const [persons, setPersons] = useState([])
 	const [hiddenPersonIDs, setHiddenPersonIDs] = useState([])
 	const [isLogined, setIsLogined] = useState(false)
-	const [loginNotification, setLoginNotification] = useState(false)
+	const [loginNotification, setLoginNotification] = useState(null)
 
 	useEffect(() => {
 		network
@@ -56,16 +56,30 @@ const App = () => {
 	}
 
 	// Login
-	const handleLogin = () => {
+	const handleLogin = (login) => {
+		if (login !== "test") {
+			setLoginNotification({
+				color: "red",
+				text: "Неверный логин"
+			})
+
+			setTimeout(() => setLoginNotification(null), 2_000)
+
+			return
+		}
+
 		networkService
 			.auth()
 			.then(response => {
 				localStorage.setItem("credentials", response.data)
 				setIsLogined(true)
-				setLoginNotification(true)
+				setLoginNotification({
+					color: "green",
+					text: "Вы успешно вошли"
+				})
 
 				setTimeout(() => {
-					setLoginNotification(false)
+					setLoginNotification(null)
 				}, 2_000)
 			})
 	}
@@ -78,13 +92,13 @@ const App = () => {
 	return (
 		<div>
 			<h2>Login</h2>
-			{ loginNotification && <Notification text="Вы залогинены" /> }
+			{ loginNotification && <Notification notification={loginNotification} /> }
 			{
 				isLogined ? 
 					<Welcome logout={handleLogout} /> :
 					<LoginForm handleLogin={handleLogin} />
 			}
-			
+
 			<h2>Phonebook</h2>
 			<Filter persons={persons} setHiddenPersonIDs={setHiddenPersonIDs} />
 			<PersonForm

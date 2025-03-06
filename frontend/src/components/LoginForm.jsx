@@ -2,7 +2,8 @@ const LoginForm = ({handleLogin}) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		handleLogin()
+		const login = e.target.login.value;
+		handleLogin(login);
 	};
 
 	return (

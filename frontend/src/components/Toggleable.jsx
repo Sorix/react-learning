@@ -1,4 +1,5 @@
 import { useState } from "react"
+import PropTypes from 'prop-types'
 
 /**
  * A reusable component that can show/hide its children content
@@ -31,3 +32,7 @@ const Toggleable = (props) => {
 }
 
 export default Toggleable
+
+Toggleable.propTypes = {
+	buttonLabel: PropTypes.string.isRequired
+}
